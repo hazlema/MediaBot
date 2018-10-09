@@ -15,9 +15,13 @@
 * MediaBot.emit('polling-data', { name, url, date, source });
 *******************************************************/
 Polling.prototype.bitchute = function(urls) {
-    const tag        = "BitChute";
     const FeedParser = require('feedparser');
-    
+
+    // This class
+    const instance = this;
+    tag = "BitChute";
+
+
     urls.map(function(site) {
         const thisSite = Utils.urlCleaner(site);
         const bitFeed  = new FeedParser();

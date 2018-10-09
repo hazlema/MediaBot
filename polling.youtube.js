@@ -18,8 +18,10 @@ Polling.prototype.youtube = function(urls) {
     const ago      = require("ago");
     const isNumber = require("isnumber");
     const {JSDOM}  = require("jsdom");
-    const tag = "YouTube";
+
+    // This class
     const instance = this;
+    tag = "YouTube";
 
         urls.map(function(site) {
             var thisSite = Utils.urlCleaner(site);

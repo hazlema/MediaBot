@@ -348,7 +348,7 @@ MediaBot.on('tick', data => {
         if (database.getSetting('config.json', 'mediabot.shownotify', 'false') == 'true')  shownotify();
         
         // Check for a database rebuild
-        doRebuild();
+        if (!isRebuild) doRebuild();
     }
 
     // Handles ALL the Polling Events
@@ -393,19 +393,19 @@ stdin.on('data', function (key) {
     // Process letter keys
     //
     switch (key.toLowerCase()) {
-        case '\u0003': process.exit(100);            break;  // Ctrl-C
-        case 's':      timers.trigger("status");     break;
-        case 'q':      timers.trigger("queue");      break;
-        case 'v':      Utils.versionCheck(Ver);      break;
-        case 'x':      process.exit(100);            break;
-        case "r":      process.exit();               break;
-        case "b":      doRebuild(true);              break;
+        case '\u0003': process.exit(100);               break;  // Ctrl-C
+        case 's':      timers.trigger("status");        break;
+        case 'q':      timers.trigger("queue");         break;
+        case 'v':      Utils.versionCheck(Ver);         break;
+        case 'x':      process.exit(100);               break;
+        case "r":      process.exit();                  break;
+        case "b":      if (!isRebuild) doRebuild(true); break;
         case "?":
-        case "h":      showcommands();               break;
-        case "d":      showdatabase();               break;
-        case "n":      shownotify();                 break;
-        case "i":      showcfg();                    break;
-        case "t":      showtimers();                 break;
+        case "h":      showcommands();                  break;
+        case "d":      showdatabase();                  break;
+        case "n":      shownotify();                    break;
+        case "i":      showcfg();                       break;
+        case "t":      showtimers();                    break;
         case 'p': 
             var display = [];
             var index   = 1;
@@ -470,7 +470,7 @@ MediaBot.on('rebuildStart', data => {
         // Wait for 'Deferred Write' Trigger
         // 
         const cmd  = `polling.${source}`;  // polling.[site]
-        const args = JSON.stringify(database.getSection("config.json", data.name));
+        const args = JSON.stringify(database.getSection("config.json", `polling.${source}`));
         const exec = `${cmd}(${args})`;
 
         eval(exec);
@@ -534,6 +534,8 @@ var doRebuild = function(force=false) {
                 timer.paused = true;
             }
         });
+
+        isRebuild = true;
 
         setTimeout(function() {
             MediaBot.emit('rebuildStart', rebuildTasks.shift());
@@ -752,27 +754,37 @@ Bot.on('message', message => {
         // Rebuild Index of data source
         //
         if (cmd == ".rebuild" ) {
-            var source = msg.shift();
+            if (!isRebuild) {
+                var source = msg.shift();
 
-            MediaBot.emit('log', `{MediaBot} Starting database rebuild for [${source}]`);
-            message.channel.send( discordEmbed(`Starting database rebuild for [${source}], go to the [botlog] channel for more info.`) );
+                MediaBot.emit('log', `{MediaBot} Starting database rebuild for [${source}]`);
+                message.channel.send( discordEmbed(`Starting database rebuild for [${source}], go to the [botlog] channel for more info.`) );
 
-            MediaBot.emit('rebuildStart', source);
+                MediaBot.emit('rebuildStart', source);
+                isRebuild = true;
+            } else {
+                MediaBot.emit('log', `{MediaBot} Currently preforming a rebuild, try again later.`);
+            }
         }
 
         // Rebuild all indexes
         //
         if (cmd == ".rebuildall" ) {
-            database.getSection('config.json', 'polling').forEach(host => {
-                if (host.name != "botlog") {
-                    rebuildTasks.push(host.name);
-                }
-            });
+            if (!isRebuild) {
+                    database.getSection('config.json', 'polling').forEach(host => {
+                    if (host.name != "botlog") {
+                        rebuildTasks.push(host.name);
+                    }
+                });
 
-            MediaBot.emit('log', `{MediaBot} Starting database rebuild for [${rebuildTasks.join(', ')}]`);
-            message.channel.send( discordEmbed(`Starting database rebuild for [${rebuildTasks.join(', ')}], go to the [botlog] channel for more info.`) );
-            
-            MediaBot.emit('rebuildStart', rebuildTasks.shift());
+                MediaBot.emit('log', `{MediaBot} Starting database rebuild for [${rebuildTasks.join(', ')}]`);
+                message.channel.send( discordEmbed(`Starting database rebuild for [${rebuildTasks.join(', ')}], go to the [botlog] channel for more info.`) );
+                
+                MediaBot.emit('rebuildStart', rebuildTasks.shift());
+                isRebuild = true;
+            } else {
+                MediaBot.emit('log', `{MediaBot} Currently preforming a rebuild, try again later.`);
+            }
         }
 
         // Notify [clear]

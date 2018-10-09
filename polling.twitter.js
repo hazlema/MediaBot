@@ -16,8 +16,10 @@
  ********************************************************/
 Polling.prototype.twitter = function(urls) {
     const {JSDOM}  = require("jsdom");
-    const tag      = "Twitter";
+
+    // This class
     const instance = this;
+    tag = "Twitter";
 
         urls.map(function(site) {
             var thisSite = Utils.urlCleaner(site);
