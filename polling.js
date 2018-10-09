@@ -18,7 +18,7 @@ const path     = require("path");
 const {Utils}  = require(path.join(__dirname, 'utils'));
 
 class Polling {
-    openUrl(url) {
+    openUrl(url, tag) {
         return new Promise(function(resolve, reject) {
             request(url, function (error, response, body) {
                 if (!error) {

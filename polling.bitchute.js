@@ -16,49 +16,47 @@
 *******************************************************/
 Polling.prototype.bitchute = function(urls) {
     const FeedParser = require('feedparser');
+    const Stream     = require('stream').Readable;
 
     // This class
     const instance = this;
-    const tag = "BitChute";
-
+    const tag      = "BitChute";
 
     urls.map(function(site) {
         const thisSite = Utils.urlCleaner(site);
-        const bitFeed  = new FeedParser();
-        
         MediaBot.emit('log', `{${tag}} checking: [${Utils.httpStrip(thisSite)}]`);
+
+        instance.openUrl(thisSite, tag).then(function(result) {
+            if (result) {
+
+                // Convert HTML into a stream
+                //
+                var readable = new Stream();
+                readable.push(result);
+                readable.push(null);
         
-        request
-            .get(thisSite)
-            .on('response', function(response) {
-                if (response.statusCode != 200) {
-                    MediaBot.emit('log-notify', `{${tag}} <WARNING> http error: [${response.statusCode}], url: [${Utils.httpStrip(url)}]`);
-                }
-            })
-            .on('error', function(response) {
-                MediaBot.emit('log-notify', `{${tag}} <WARNING> request error: [${response}], url: [${Utils.httpStrip(url)}]`);
-            })
-            .pipe(bitFeed);
-        
-        bitFeed.on('error', function (error) {
-            console.log(error);
-            MediaBot.emit('log', `{BitChute} <WARNING> feedparser error: [${error.message}]`);
-            MediaBot.emit('notify', `{BitChute} <WARNING> feedparser error: [${error.message}]`);
-        });
-        
-        bitFeed.on('readable', function() {
-            var stream = this;
-            var item;
-            
-            while (item = stream.read()) {
-                if (item !== null) {
-                    MediaBot.emit('polling-data', {
-                        name:  item['meta']['title'],
-                        url:   item['link'].replace('embed', 'video'),
-                        date:  item['pubdate'],
-                        source: 'bitchute'
+                // Pipe to feedparser
+                //
+                readable.pipe(new FeedParser())
+                    .on('error', function (error) {
+                        MediaBot.emit('log', `{BitChute} <WARNING> feedparser error: [${error.message}]`);
+                        MediaBot.emit('notify', `{BitChute} <WARNING> feedparser error: [${error.message}]`);
+                    })
+                    .on('readable', function() {
+                        var stream = this;
+                        var item;
+                        
+                        while (item = stream.read()) {
+                            if (item !== null) {
+                                MediaBot.emit('polling-data', {
+                                    name:  item['meta']['title'],
+                                    url:   item['link'].replace('embed', 'video'),
+                                    date:  item['pubdate'],
+                                    source: tag.toLowerCase()
+                                });
+                            }
+                        }
                     });
-                }
             }
         });
     });   
