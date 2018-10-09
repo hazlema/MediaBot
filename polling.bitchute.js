@@ -28,19 +28,15 @@ Polling.prototype.bitchute = function(urls) {
 
         instance.openUrl(thisSite, tag).then(function(result) {
             if (result) {
-
                 // Convert HTML into a stream
-                //
                 var readable = new Stream();
                 readable.push(result);
                 readable.push(null);
         
                 // Pipe to feedparser
-                //
                 readable.pipe(new FeedParser())
                     .on('error', function (error) {
-                        MediaBot.emit('log', `{BitChute} <WARNING> feedparser error: [${error.message}]`);
-                        MediaBot.emit('notify', `{BitChute} <WARNING> feedparser error: [${error.message}]`);
+                        MediaBot.emit('log-notify', `{BitChute} <WARNING> feedparser error: [${error.message}]`);
                     })
                     .on('readable', function() {
                         var stream = this;
@@ -58,6 +54,8 @@ Polling.prototype.bitchute = function(urls) {
                         }
                     });
             }
+        }).catch(function(e) {
+            MediaBot.emit('log-notify', `{${tag}} <WARNING> parse error [${e}], url: [${Utils.httpStrip(thisSite)}]`);
         });
     });   
 }
