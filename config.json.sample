@@ -1,0 +1,101 @@
+[
+    {
+        "discord.oAuth": "",
+        "timers.status": 3,
+        "timers.queue": 5,
+        "autoskip.time": 8,
+        "autoskip.unit": "h",
+        "database.rebuild": 2000,
+        "mediabot.showconsole": "true",
+        "mediabot.showconfig": "false",
+        "mediabot.showdata": "true",
+        "mediabot.showstatus": "true",
+        "mediabot.showtimers": "true",
+        "mediabot.shownotify": "false",
+        "polling": [
+            {
+                "name": "bitchute",
+                "time": 30,
+                "skipQueue": false,
+                "disabled": false
+            },
+            {
+                "name": "twitter",
+                "time": 15,
+                "skipQueue": true,
+                "disabled": false
+            },
+            {
+                "name": "youtube",
+                "time": 5,
+                "skipQueue": false,
+                "disabled": false
+            },
+            {
+                "name": "botlog",
+                "time": 0,
+                "skipQueue": true,
+                "disabled": true
+            }
+        ],
+        "polling.bitchute": [
+            "https://www.bitchute.com/feeds/rss/channel/computingforever",
+            "https://www.bitchute.com/feeds/rss/channel/styxhexenhammer666",
+            "https://www.bitchute.com/feeds/rss/channel/pauljosephwatson",
+            "https://www.bitchute.com/feeds/rss/channel/blackpigeonspeaks",
+            "https://www.bitchute.com/feeds/rss/channel/markdice",
+            "https://www.bitchute.com/feeds/rss/channel/nextnewsnetwork",
+            "https://www.bitchute.com/feeds/rss/channel/corbettreport",
+            "https://www.bitchute.com/feeds/rss/channel/corbettreportextras",
+            "https://www.bitchute.com/feeds/rss/channel/stefanmolyneux",
+            "https://www.bitchute.com/feeds/rss/channel/thequartering",
+            "https://www.bitchute.com/feeds/rss/channel/timpool",
+            "https://www.bitchute.com/feeds/rss/channel/stevencrowder",
+            "https://www.bitchute.com/feeds/rss/channel/laurensouthern",
+            "https://www.bitchute.com/feeds/rss/channel/realnewswithdavidknight",
+            "https://www.bitchute.com/feeds/rss/channel/thewhitehouse",
+            "https://www.bitchute.com/feeds/rss/channel/hardbastard",
+            "https://www.bitchute.com/feeds/rss/channel/stormcloudsgathering",
+            "https://www.bitchute.com/feeds/rss/channel/veritasvisuals",
+            "https://www.bitchute.com/feeds/rss/channel/newsbud",
+            "https://www.bitchute.com/feeds/rss/channel/sgt-report",
+            "https://www.bitchute.com/feeds/rss/channel/razorfist"
+        ],
+        "polling.youtube": [
+            "https://www.youtube.com/user/LionelY2K/videos",
+            "https://www.youtube.com/user/RTAmerica/videos",
+            "https://www.youtube.com/user/NTDChinaUncensored/videos",
+            "https://www.youtube.com/user/Andywarski/videos",
+            "https://www.youtube.com/user/JudicialWatch/videos",
+            "https://www.youtube.com/user/PowerfulJRE/videos",
+            "https://www.youtube.com/channel/UCYmqiv_DNFYFkn8fvvJujmA/videos",
+            "https://www.youtube.com/channel/UCaeO5vkdj5xOQHp4UmIN6dw/videos",
+            "https://www.youtube.com/channel/UCvUSer_M2VGaBY-MFlUeShg/videos",
+            "https://www.youtube.com/channel/UC39wDqrRwtgVtWUPZmbJ0hw/videos",
+            "https://www.youtube.com/channel/UCfYbb7nga6-icsFWWgS-kWw/videos"
+        ],
+        "polling.twitter": [
+            "https://www.twitter.com/realDonaldTrump",
+            "https://www.twitter.com/WhiteHouse",
+            "https://www.twitter.com/Breaking911",
+            "https://www.twitter.com/LionelMedia",
+            "https://www.twitter.com/MarkDice",
+            "https://www.twitter.com/DRUDGE_REPORT",
+            "https://www.twitter.com/JamesOKeefeIII",
+            "https://www.twitter.com/PrisonPlanet",
+            "https://www.twitter.com/stranahan",
+            "https://www.twitter.com/BreitbartNews",
+            "https://www.twitter.com/RT_com"
+        ],
+        "channels.bitchute": [
+        ],
+        "channels.youtube": [
+        ],
+        "channels.twitter": [
+        ],
+        "channels.botlog": [
+        ],
+        "mediabot.users": [
+        ]   
+    }
+]

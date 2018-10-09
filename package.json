@@ -1,0 +1,20 @@
+{
+  "name": "mediabot",
+  "version": "2.4",
+  "description": "Mediabot for discord",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "FrostyCrits",
+  "license": "MIT",
+  "dependencies": {
+    "ago": "^1.0.0",
+    "ansi": "^0.3.1",
+    "discord.js": "^11.4.2",
+    "feedparser": "^2.2.9",
+    "jsdom": "^12.2.0",
+    "request": "^2.88.0",
+    "taffydb": "^2.7.3"
+  }
+}
