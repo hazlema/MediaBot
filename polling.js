@@ -17,9 +17,6 @@ const request  = require("request");
 const path     = require("path");
 const {Utils}  = require(path.join(__dirname, 'utils'));
 
-// Set the tag in your polling module
-var tag = "unknown";
-
 class Polling {
     openUrl(url) {
         return new Promise(function(resolve, reject) {

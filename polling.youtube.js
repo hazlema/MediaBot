@@ -21,7 +21,7 @@ Polling.prototype.youtube = function(urls) {
 
     // This class
     const instance = this;
-    tag = "YouTube";
+    const tag = "YouTube";
 
         urls.map(function(site) {
             var thisSite = Utils.urlCleaner(site);

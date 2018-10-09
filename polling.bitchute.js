@@ -19,7 +19,7 @@ Polling.prototype.bitchute = function(urls) {
 
     // This class
     const instance = this;
-    tag = "BitChute";
+    const tag = "BitChute";
 
 
     urls.map(function(site) {

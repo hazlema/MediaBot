@@ -19,7 +19,7 @@ Polling.prototype.twitter = function(urls) {
 
     // This class
     const instance = this;
-    tag = "Twitter";
+    const tag = "Twitter";
 
         urls.map(function(site) {
             var thisSite = Utils.urlCleaner(site);
